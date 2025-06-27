@@ -1,4 +1,4 @@
-Phase 4 – FreeRTOS-MPU Based Task Isolation
+# Phase 4 – FreeRTOS-MPU Based Task Isolation
 
 The MPU SUPPORT offered by FreeRTOS was different compared to the baremetal MPU integration. 
 Here the individual tasks could be assigned Privileged and Unprivileged status. 
