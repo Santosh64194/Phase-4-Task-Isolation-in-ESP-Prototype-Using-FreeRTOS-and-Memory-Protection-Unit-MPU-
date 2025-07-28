@@ -1,19 +1,13 @@
-# Phase 4 – FreeRTOS-MPU Based Task Isolation
-[MEMORY PROTECTION UNIT - Week3,4 (1).pdf](https://github.com/user-attachments/files/21466157/MEMORY.PROTECTION.UNIT.-.Week3.4.1.pdf)
+#Phase 4 – FreeRTOS-MPU Based Task Isolation
 
+In this phase, we integrated the FreeRTOS kernel with Memory Protection Unit (MPU) support to enable task-level isolation using privileged and unprivileged execution modes. Unlike the bare-metal MPU implementation, FreeRTOS allows individual tasks to be assigned specific privilege levels and access rights through xTaskCreateRestricted().
 
-The MPU SUPPORT offered by FreeRTOS was different compared to the baremetal MPU integration. 
-Here the individual tasks could be assigned Privileged and Unprivileged status. 
-A total of 8 MPU regions can be configured out of which 4 are configured by the Kernel itself which allowed us to allocate 3 regions for each task. 
-We again allocated the region containing the global variable as a privileged read write region for the mpuread() task - privileged task, a privileged read only region for the controlunit() task - privileged task and a read only region for the loggertask() - unprivileged task
+The MPU supports a total of 8 regions, 4 of which are reserved by the FreeRTOS kernel. This left us with 3 configurable regions per task. We used this capability to define controlled access to a shared global variable as follows:
 
+mpuread() – Privileged task with read-write access
 
-In this phase, we integrated the MPU-enabled FreeRTOS kernel to assign privileged and unprivileged modes to individual tasks. Using xTaskCreateRestricted(), each task was configured with custom memory access:
+controlunit() – Privileged task with read-only access
 
-mpuread() → Privileged, with read-write access to shared memory
+loggertask() – Unprivileged task with read-only access
 
-controlunit() → Privileged, read-write access
-
-loggertask() → Privileged, read-only access
-
-Attempts to violate access rules (e.g., unprivileged write) successfully triggered the MemManage_Handler(), demonstrating robust task-level memory protection.
+This setup effectively enforced memory access boundaries. Any unauthorized access attempts—such as an unprivileged task trying to write to protected memory—correctly triggered the MemManage_Handler(), validating the MPU’s task isolation mechanism under FreeRTOS.
