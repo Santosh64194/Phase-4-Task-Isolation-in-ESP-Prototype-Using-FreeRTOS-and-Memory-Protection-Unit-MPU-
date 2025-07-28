@@ -1,4 +1,6 @@
 # Phase 4 – FreeRTOS-MPU Based Task Isolation
+[MEMORY PROTECTION UNIT - Week3,4 (1).pdf](https://github.com/user-attachments/files/21466157/MEMORY.PROTECTION.UNIT.-.Week3.4.1.pdf)
+
 
 The MPU SUPPORT offered by FreeRTOS was different compared to the baremetal MPU integration. 
 Here the individual tasks could be assigned Privileged and Unprivileged status. 
